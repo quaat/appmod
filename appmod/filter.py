@@ -1,31 +1,31 @@
 import numpy as np
 import pandas as pd
 
-def mean(df : pd.DataFrame) -> pd.DataFrame:
+def mean(s: pd.Series) -> pd.Series:
     """
-    Computes the mean of each numeric column in the given DataFrame and returns
-    these means as a new one-row DataFrame.
+    Computes the mean of a numeric Series and returns
+    that mean as a single-value Series.
     """
+    # Calculate the mean
+    mean_val = s.mean()
 
-    # Select only numeric columns to avoid issues with non-numeric data
-    numeric_df = df.select_dtypes(include=[np.number])
+    # Return a single-value Series (the index label is up to you)
+    return pd.Series([mean_val], index=[s.name or "mean"])
 
-    # Calculate the mean for each numeric column
-    mean_series = numeric_df.mean()
+def max(s: pd.Series) -> pd.Series:
+    """
+    Computes the maximum of a numeric Series and returns
+    that max as a single-value Series.
+    """
+    max_val = s.max()
 
-    # Convert the Series (means) to a one-row DataFrame
-    mean_df = pd.DataFrame([mean_series.values], columns=mean_series.index)
+    return pd.Series([max_val], index=[s.name or "max"])
 
-    return mean_df
+def min(s: pd.Series) -> pd.Series:
+    """
+    Computes the minimum of a numeric Series and returns
+    that min as a single-value Series.
+    """
+    min_val = s.min()
 
-def max(df : pd.DataFrame) :
-    numeric_df = df.select_dtypes(include=[np.number])
-    max_series = numeric_df.max()
-    max_df = pd.DataFrame([max_series.values], columns=max_series.index)
-    return max_df
-
-def min(df : pd.DataFrame) :
-    numeric_df = df.select_dtypes(include=[np.number])
-    min_series = numeric_df.max()
-    min_df = pd.DataFrame([min_series.values], columns=min_series.index)
-    return min_df
+    return pd.Series([min_val], index=[s.name or "min"])
